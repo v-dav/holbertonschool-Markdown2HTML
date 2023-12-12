@@ -28,7 +28,7 @@ def main():
         print(f"Missing {md_file}", file=sys.stderr)
         sys.exit(1)
 
-    # Parsing the markdown file and writing to a new html file
+    # Parsing the markdown file and writing headings to a new html file
     with open(md_file, "r", encoding='UTF-8') as markdown:
         with open(html_file, "w", encoding='UTF-8') as html:
             while True:
