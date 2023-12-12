@@ -3,11 +3,14 @@
 ![Python Version](https://img.shields.io/badge/Python-3.7%20%2B-blue.svg)
 ![PEP8 Compliant](https://img.shields.io/badge/PEP8-Compliant-green.svg)
 
-## Project Overview
+![Convert-Markdown-to-HTML-in-Java-using-REST-API](https://github.com/v-dav/holbertonschool-Markdown2HTML/assets/115344057/158d9cd3-b04f-4865-8065-def1dea37197)
+
+
+## 🧐 Project Overview
 
 Welcome to the "Markdown to HTML" project! In this project, you'll learn how to convert Markdown files into HTML. You'll utilize Python 3.7 or higher, ensuring PEP 8 style compliance. This project is designed to strengthen your Python skills while introducing you to the intricacies of parsing and processing text.
 
-## Learning Objectives
+## 🌱 Learning Objectives
 
 By the end of this project, you'll be able to:
 
@@ -17,7 +20,7 @@ By the end of this project, you'll be able to:
 - Document your modules effectively
 - Ensure that your code is executable and follows best practices
 
-## Requirements
+## ⚙️ Requirements
 
 To successfully run this project, make sure you have:
 
@@ -28,6 +31,6 @@ To successfully run this project, make sure you have:
 - Modules that adhere to PEP 8 and include proper documentation
 - Code that is not executed when imported (use `if __name__ == "__main__":`)
 
-## Author
+## 🧑‍💻 Author
 
 - [Vladimir Davidov](https://github.com/v-dav) - Holberton School
