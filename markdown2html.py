@@ -24,6 +24,8 @@ def main():
         print(f"Missing {md_file}", file=sys.stderr)
         sys.exit(1)
 
+    sys.exit()
+
 
 if __name__ == "__main__":
     main()
