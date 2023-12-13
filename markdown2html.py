@@ -28,17 +28,35 @@ def main():
         print(f"Missing {md_file}", file=sys.stderr)
         sys.exit(1)
 
-    # Parsing the markdown file and writing headings to a new html file
+    # Parsing the markdown file and writing html to a new html file
     with open(md_file, "r", encoding='UTF-8') as markdown:
         with open(html_file, "w", encoding='UTF-8') as html:
+            ul_open = False
             while True:
                 line = markdown.readline()
+
+                # Checks if we are in an ul
+                if ul_open and not line.startswith("-"):
+                    html.write("</ul>\n")
+                    ul_open = False
+
+                # Reaches the EOF
                 if not line:
                     break
+
+                # Generates Headings
                 if line.startswith("#"):
                     count = line.count("#")
                     text = line.rsplit('# ', 1)[1].strip()
                     html.write(f"<h{count}>{text}</h{count}>\n")
+
+                # Generates unordered listing
+                if line.startswith("-"):
+                    if not ul_open:
+                        html.write("<ul>\n")
+                        ul_open = True
+                    text = line.rsplit('- ', 1)[1].strip()
+                    html.write(f"<li>{text}</li>\n")
 
     # Exits after sucessful program execution
     sys.exit()
