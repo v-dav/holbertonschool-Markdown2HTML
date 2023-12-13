@@ -31,6 +31,7 @@ def main():
     # Parsing the markdown file and writing html to a new html file
     with open(md_file, "r", encoding='UTF-8') as markdown:
         with open(html_file, "w", encoding='UTF-8') as html:
+            ol_open = False
             ul_open = False
             while True:
                 line = markdown.readline()
@@ -39,6 +40,11 @@ def main():
                 if ul_open and not line.startswith("-"):
                     html.write("</ul>\n")
                     ul_open = False
+
+                # Checks if we are in an ol
+                if ol_open and not line.startswith("*"):
+                    html.write("</ol>\n")
+                    ol_open = False
 
                 # Reaches the EOF
                 if not line:
@@ -56,6 +62,14 @@ def main():
                         html.write("<ul>\n")
                         ul_open = True
                     text = line.rsplit('- ', 1)[1].strip()
+                    html.write(f"<li>{text}</li>\n")
+
+                # Generates ordered listing
+                if line.startswith('*'):
+                    if not ol_open:
+                        html.write("<ol>\n")
+                        ol_open = True
+                    text = line.rsplit('* ', 1)[1].strip()
                     html.write(f"<li>{text}</li>\n")
 
     # Exits after sucessful program execution
