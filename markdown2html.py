@@ -33,6 +33,7 @@ def main():
         with open(html_file, "w", encoding='UTF-8') as html:
             ol_open = False
             ul_open = False
+            p_open = False
             while True:
                 line = markdown.readline()
 
@@ -46,6 +47,12 @@ def main():
                     html.write("</ol>\n")
                     ol_open = False
 
+                # Checks if we are in a paragraph
+                if p_open and (line.startswith("-") or line.startswith("*") or
+                               line.startswith("#")):
+                    html.write("</p>\n")
+                    p_open = False
+
                 # Reaches the EOF
                 if not line:
                     break
@@ -57,7 +64,7 @@ def main():
                     html.write(f"<h{count}>{text}</h{count}>\n")
 
                 # Generates unordered listing
-                if line.startswith("-"):
+                elif line.startswith("-"):
                     if not ul_open:
                         html.write("<ul>\n")
                         ul_open = True
@@ -65,12 +72,22 @@ def main():
                     html.write(f"<li>{text}</li>\n")
 
                 # Generates ordered listing
-                if line.startswith('*'):
+                elif line.startswith('*'):
                     if not ol_open:
                         html.write("<ol>\n")
                         ol_open = True
                     text = line.rsplit('* ', 1)[1].strip()
                     html.write(f"<li>{text}</li>\n")
+
+                # Generates paragraphs
+                elif not line.startswith("\n"):
+                    if not p_open:
+                        html.write("<p>\n")
+                        p_open = True
+                    else:
+                        html.write("<br/>\n")
+                    text = line
+                    html.write(text)
 
     # Exits after sucessful program execution
     sys.exit()
