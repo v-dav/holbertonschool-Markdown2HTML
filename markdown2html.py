@@ -49,7 +49,7 @@ def main():
 
                 # Checks if we are in a paragraph
                 if p_open and (line.startswith("-") or line.startswith("*") or
-                               line.startswith("#")):
+                               line.startswith("#") or line.startswith("\n")):
                     html.write("</p>\n")
                     p_open = False
 
