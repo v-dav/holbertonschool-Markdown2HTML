@@ -2,7 +2,20 @@
 """A script converting Markdown markup language files into HTML files"""
 
 import os
+import re
 import sys
+
+
+def replace_bold(match):
+    """A function that returns a formatted bold string html"""
+    bold_text = match.group(1)
+    return f'<b>{bold_text}</b>'
+
+
+def replace_em(match):
+    """A function that returns a formatted em string html"""
+    em_text = match.group(1)
+    return f'<em>{em_text}</em>'
 
 
 def main():
@@ -34,6 +47,10 @@ def main():
             ol_open = False
             ul_open = False
             p_open = False
+            pattern_bold = re.compile(r'\*\*(.*?)\*\*')
+            pattern_em = re.compile(r'__(.*?)__')
+
+            # The loop to parse the file
             while True:
                 line = markdown.readline()
 
@@ -43,19 +60,25 @@ def main():
                     ul_open = False
 
                 # Checks if we are in an ol
-                if ol_open and not line.startswith("*"):
+                if ol_open and not line.startswith("* "):
                     html.write("</ol>\n")
                     ol_open = False
 
                 # Checks if we are in a paragraph
-                if p_open and (line.startswith("-") or line.startswith("*") or
-                               line.startswith("#") or line.startswith("\n")):
+                if p_open and (line.startswith("-") or
+                               line.startswith("* ,") or
+                               line.startswith("#") or
+                               line.startswith("\n")):
                     html.write("</p>\n")
                     p_open = False
 
                 # Reaches the EOF
                 if not line:
                     break
+
+                # Evaluation em and bold contents in the line
+                line = re.sub(pattern_bold, replace_bold, line)
+                line = re.sub(pattern_em, replace_em, line)
 
                 # Generates Headings
                 if line.startswith("#"):
@@ -72,7 +95,7 @@ def main():
                     html.write(f"<li>{text}</li>\n")
 
                 # Generates ordered listing
-                elif line.startswith('*'):
+                elif line.startswith('* '):
                     if not ol_open:
                         html.write("<ol>\n")
                         ol_open = True
